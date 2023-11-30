@@ -42,51 +42,50 @@ print("Model Loaded Successfully.")
 
 import glob
 arr_img = glob.glob("*.bmp")
-print(arr_img)
-x = len(arr_img)
-print(x)
+# print(arr_img)
+length = len(arr_img)
+print(length)
 
-for test_img in arr_img
+for test_img in range(length):
 
-# In[44]:
+    # In[44]:
 
-
-interpreter.allocate_tensors()
-_, height, width, _ = interpreter.get_input_details()[0]['shape']
-print("Image Shape (", width, ",", height, ")")
-
-
-# In[102]:
+    interpreter.allocate_tensors()
+    _, height, width, _ = interpreter.get_input_details()[0]['shape']
+    print("Image Shape (", width, ",", height, ")")
 
 
-# Load an image to be classified.
-#image = cv2.imread(data_folder + "Good_img_70_CLAHE_shp.bmp").resize((width, height))
-image = Image.open(data_folder + "Damage_img_6_CLAHE_shp.bmp").convert('RGB').resize((width, height))
-input_mean = 0.    
-input_std = 255.
+    # In[102]:
 
-input_img = (np.float32(image) - input_mean) / input_std
+    # Load an image to be classified.
+    #image = cv2.imread(data_folder + "Good_img_70_CLAHE_shp.bmp").resize((width, height))
+    #image = Image.open(data_folder + "Damage_img_6_CLAHE_shp.bmp").convert('RGB').resize((width, height))
+    image = Image.open(arr_img[test_img]).convert('RGB').resize((width, height))
+    input_mean = 0.    
+    input_std = 255.
 
-
-# In[103]:
-
-
-# Classify the image.
-time1 = time.time()
-label_id, prob = classify_image(interpreter, image)
-time2 = time.time()
-classification_time = np.round(time2-time1, 3)
-print("Classification Time =", classification_time, "seconds.")
-
-# Read class labels.
-labels = load_labels(label_path)
-
-# Return the classification label of the image.
-classification_label = labels[label_id]
-print("Image Label is :", classification_label, ", with Accuracy :", np.round(prob*100, 2), "%.")
+    input_img = (np.float32(image) - input_mean) / input_std
 
 
-# In[ ]:
+    # In[103]:
+
+
+    # Classify the image.
+    time1 = time.time()
+    label_id, prob = classify_image(interpreter, image)
+    time2 = time.time()
+    classification_time = np.round(time2-time1, 3)
+    print("Classification Time =", classification_time, "seconds.")
+
+    # Read class labels.
+    labels = load_labels(label_path)
+
+    # Return the classification label of the image.
+    classification_label = labels[label_id]
+    print("Image Label is :", classification_label, ", with Accuracy :", np.round(prob*100, 2), "%.")
+
+
+    # In[ ]:
 
 
 
