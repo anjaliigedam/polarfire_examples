@@ -38,17 +38,20 @@ label_path = data_folder + "Labels_Quantized_Mbnetv2_Gear.txt"
 
 interpreter = Interpreter(model_path)
 print("Model Loaded Successfully.")
+print('\n')
 
 
 import glob
 arr_img = glob.glob("*.bmp")
 # print(arr_img)
 length = len(arr_img)
-print(length)
+# print(length)
 
 for test_img in range(length):
 
     # In[44]:
+
+    print("Input Image =", arr_img[test_img])
 
     interpreter.allocate_tensors()
     _, height, width, _ = interpreter.get_input_details()[0]['shape']
@@ -84,6 +87,7 @@ for test_img in range(length):
     classification_label = labels[label_id]
     print("Image Label is :", classification_label, ", with Accuracy :", np.round(prob*100, 2), "%.")
 
+    print('\n')
 
     # In[ ]:
 
