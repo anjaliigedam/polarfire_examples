@@ -31,8 +31,8 @@ def classify_image(interpreter, image, top_k=1):
     ordered = np.argpartition(-output, 1)
     return [(i, output[i]) for i in ordered[:top_k]][0]
 
-data_folder = "/home/root/thales/Documents/Quantized_MbnetV2/"
-image_folder = "/home/root/thales/Documents/Quantized_MbnetV2/Test_images/"
+data_folder = "/home/root/thales/Documents/Quantized_MbnetV2/single_image"
+image_folder = "/home/root/thales/Documents/Quantized_MbnetV2/single_image/Test_images/"
 
 model_path = data_folder + "Mbnet_gear.tflite"
 label_path = data_folder + "Labels_Quantized_Mbnetv2_Gear.txt"
