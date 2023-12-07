@@ -3,9 +3,9 @@
 # This script is for running inference on a single image 
 
 
-Model_path = "/home/thales/Documents/CMTI_TFLite_OD_model/CMTI_gear_detect.tflite"
-Label_path = "/home/thales/Documents/CMTI_TFLite_OD_model/label_map.txt"
-#Image_path = "/home/thales/Documents/CMTI_TFLite_OD_model/Good_img_48_CLAHE_shp.bmp"
+Model_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/CMTI_gear_detect.tflite"
+Label_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/label_map.txt"
+#Image_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/Good_img_48_CLAHE_shp.bmp"
 
 from tflite_runtime.interpreter import Interpreter
 from PIL import Image
