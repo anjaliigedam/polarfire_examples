@@ -21,6 +21,8 @@ length = len(arr_img)
 # print(length)
 
 for test_img in range(length):
+
+    print("Input Image =", arr_img[test_img])
     
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
@@ -34,7 +36,6 @@ for test_img in range(length):
 
     min_conf_threshold = 0.55
 
-    print("Input Image =", arr_img[test_img])
     # img = Image.open(Image_path)
     img = Image.open(arr_img[test_img])
     resized_img = img.resize((width, height))
