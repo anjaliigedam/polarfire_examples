@@ -8,6 +8,9 @@ Label_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/label_map.txt"
 # Image_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/Image_data/Good_img_48_CLAHE_shp.bmp"
 
 from tflite_runtime.interpreter import Interpreter
+from PIL import Image
+import numpy as np
+import time
 
 interpreter = Interpreter(Model_path)
 
@@ -17,23 +20,24 @@ arr_img = glob.glob("*.bmp")
 length = len(arr_img)
 # print(length)
 
-input_details = interpreter.get_input_details()
-output_details = interpreter.get_output_details()
-_, height, width, _ = input_details[0]['shape']
-print("Image Shape (", width, ",", height, ")")
-
-interpreter.allocate_tensors()
-
-with open(Label_path,'r') as text:
-    labels = [line.strip() for line in text.readlines()]
-
-from PIL import Image
-import numpy as np
-import time
-
-min_conf_threshold = 0.55
-
 for test_img in range(length):
+
+    print("debug 1")
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+    _, height, width, _ = input_details[0]['shape']
+    print("Image Shape (", width, ",", height, ")")
+    
+    print("debug 2")
+    
+    interpreter.allocate_tensors()
+    
+    print("debug 3")
+    
+    with open(Label_path,'r') as text:
+        labels = [line.strip() for line in text.readlines()]
+
+    min_conf_threshold = 0.55
 
     print("Input Image =", arr_img[test_img])
     # img = Image.open(Image_path)
@@ -46,7 +50,7 @@ for test_img in range(length):
     start_time = time.time()
     interpreter.set_tensor(input_details[0]['index'],img_tensor)
     interpreter.invoke()
-    
+        
     scores = interpreter.get_tensor(output_details[0]['index']) # Probabilities/ scores of detected objects
     boxes = interpreter.get_tensor(output_details[1]['index']) # Bounding box coordinates (normalized [0,1]) of detected objects
     count = interpreter.get_tensor(output_details[2]['index']) # Number of detected objects
@@ -67,4 +71,5 @@ for test_img in range(length):
 
     print(results)  #This should print a list of dictionaries comprising the bounding box coordinates, class_id and score for each detection      
     print("Detection time:", detection_time, "seconds")
+    printf('\n')
 
