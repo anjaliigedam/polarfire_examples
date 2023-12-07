@@ -68,4 +68,5 @@ for test_img in range(length):
 
     pprint.pprint(results)
     print("Detection time:", detection_time, "seconds")
+    print('\n')
 
