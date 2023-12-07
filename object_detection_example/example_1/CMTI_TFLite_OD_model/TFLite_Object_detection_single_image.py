@@ -8,22 +8,27 @@ Label_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/label_map.txt"
 Image_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/Image_data/Good_img_48_CLAHE_shp.bmp"
 
 from tflite_runtime.interpreter import Interpreter
+from PIL import Image
+import numpy as np
+import time
 
+print("debug 1")
 interpreter = Interpreter(Model_path)
+print("debug 2")
 
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 _, height, width, _ = input_details[0]['shape']
 print("Image Shape (", width, ",", height, ")")
 
+print("debug 3")
+
 interpreter.allocate_tensors()
+
+print("debug 4")
 
 with open(Label_path,'r') as text:
     labels = [line.strip() for line in text.readlines()]
-
-from PIL import Image
-import numpy as np
-import time
 
 min_conf_threshold = 0.55
 
