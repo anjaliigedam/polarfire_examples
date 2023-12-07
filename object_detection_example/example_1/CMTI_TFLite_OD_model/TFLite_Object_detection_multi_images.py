@@ -21,18 +21,13 @@ length = len(arr_img)
 # print(length)
 
 for test_img in range(length):
-
-    print("debug 1")
+    
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
     _, height, width, _ = input_details[0]['shape']
     print("Image Shape (", width, ",", height, ")")
-    
-    print("debug 2")
-    
+  
     interpreter.allocate_tensors()
-    
-    print("debug 3")
     
     with open(Label_path,'r') as text:
         labels = [line.strip() for line in text.readlines()]
