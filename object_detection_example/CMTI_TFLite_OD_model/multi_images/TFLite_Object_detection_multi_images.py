@@ -3,8 +3,8 @@
 # This script is for running inference on a single image 
 
 
-Model_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/Defect_detect.tflite"
-Label_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/label_map.txt"
+Model_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/multi_images/Defect_detect.tflite"
+Label_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/multi_images/label_map.txt"
 # Image_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/Image_data/Good_img_48_CLAHE_shp.bmp"
 
 from tflite_runtime.interpreter import Interpreter
