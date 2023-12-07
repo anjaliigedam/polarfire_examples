@@ -39,24 +39,13 @@ label_path = data_folder + "Labels_Quantized_Mbnetv2_Gear.txt"
 interpreter = Interpreter(model_path)
 print("Model Loaded Successfully.")
 
-
-import glob
-arr_img = glob.glob("*.bmp")
-print(arr_img)
-x = len(arr_img)
-print(x)
-
 # In[44]:
-
-for test_img in arr_img:
 
 interpreter.allocate_tensors()
 _, height, width, _ = interpreter.get_input_details()[0]['shape']
 print("Image Shape (", width, ",", height, ")")
 
-
 # In[102]:
-
 
 # Load an image to be classified.
 #image = cv2.imread(data_folder + "Good_img_70_CLAHE_shp.bmp").resize((width, height))
