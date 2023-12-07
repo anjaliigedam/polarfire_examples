@@ -32,6 +32,7 @@ def classify_image(interpreter, image, top_k=1):
     return [(i, output[i]) for i in ordered[:top_k]][0]
 
 data_folder = "/home/root/thales/Documents/Quantized_MbnetV2/"
+image_folder = "/home/root/thales/Documents/Quantized_MbnetV2/Test_images/"
 
 model_path = data_folder + "Mbnet_gear.tflite"
 label_path = data_folder + "Labels_Quantized_Mbnetv2_Gear.txt"
@@ -49,7 +50,7 @@ print("Image Shape (", width, ",", height, ")")
 
 # Load an image to be classified.
 #image = cv2.imread(data_folder + "Good_img_70_CLAHE_shp.bmp").resize((width, height))
-image = Image.open(data_folder + "Damage_img_6_CLAHE_shp.bmp").convert('RGB').resize((width, height))
+image = Image.open(image_folder + "Damage_img_6_CLAHE_shp.bmp").convert('RGB').resize((width, height))
 input_mean = 0.    
 input_std = 255.
 
