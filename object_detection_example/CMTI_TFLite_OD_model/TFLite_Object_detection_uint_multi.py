@@ -3,8 +3,8 @@
 # This script is for running inference on a single image 
 
 
-Model_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/CMTI_gear_detect.tflite"
-Label_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/label_map.txt"
+Model_path = "CMTI_gear_detect.tflite"
+Label_path = "label_map.txt"
 #Image_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/Good_img_48_CLAHE_shp.bmp"
 
 from tflite_runtime.interpreter import Interpreter
@@ -16,8 +16,9 @@ import pprint
 interpreter = Interpreter(Model_path)
 
 import glob
-arr_img = glob.glob("*.bmp")
+arr_img = glob.glob("test_images/*.bmp")
 length = len(arr_img)
+print("array_images =" +str(arr_img))
 
 for test_img in range(length):
 
