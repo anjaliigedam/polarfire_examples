@@ -11,7 +11,6 @@ else:
 
 Label_path = "label_map.txt"
 
-
 from tflite_runtime.interpreter import Interpreter
 from PIL import Image
 import numpy as np
@@ -50,7 +49,6 @@ for test_img in range(length):
         norm_img = (np.float32(resized_img) - input_mean)/input_std
         img_tensor = np.expand_dims(norm_img, axis=0)
     else:
-
         img_tensor = np.expand_dims(resized_img, axis=0)
 
     start_time = time.time()
@@ -74,8 +72,6 @@ for test_img in range(length):
 
     end_time = time.time()
     detection_time = np.round(end_time - start_time, 3)
-
-    #print(results)  #This should print a list of dictionaries comprising the bounding box coordinates, class_id and score for each detection      
 
     pprint.pprint(results)
     print("Detection time:", detection_time, "seconds")
