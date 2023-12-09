@@ -2,10 +2,15 @@
 # Min_conf_threshold on line 28 can be tuned between 0.5 to 0.95 in steps of 0.05. The lower the threshold, the higher the detections, but at a risk of increased false positives
 # This script is for running inference on a single image 
 
+USE_FLOAT = 1
+print("USE_FLOAT =" +str(USE_FLOAT))
+if(USE_FLOAT == 1):
+    Model_path = "Defect_detect.tflite" #float
+else:
+    Model_path = "CMTI_gear_detect.tflite" #uint8
 
-Model_path = "CMTI_gear_detect.tflite"
 Label_path = "label_map.txt"
-#Image_path = "/home/root/thales/Documents/CMTI_TFLite_OD_model/Good_img_48_CLAHE_shp.bmp"
+
 
 from tflite_runtime.interpreter import Interpreter
 from PIL import Image
@@ -36,13 +41,18 @@ for test_img in range(length):
 
     min_conf_threshold = 0.55
 
-    #img = Image.open(Image_path)
     img = Image.open(arr_img[test_img])
     resized_img = img.resize((width, height))
-    #input_mean = 127.5
-    #input_std = 127.5
-    #norm_img = (np.float32(resized_img) - input_mean)/input_std
-    img_tensor = np.expand_dims(resized_img, axis=0)
+    
+    if(USE_FLOAT == 1):
+        input_mean = 127.5
+        input_std = 127.5
+        norm_img = (np.float32(resized_img) - input_mean)/input_std
+        img_tensor = np.expand_dims(norm_img, axis=0)
+    else:
+
+        img_tensor = np.expand_dims(resized_img, axis=0)
+
     start_time = time.time()
     interpreter.set_tensor(input_details[0]['index'],img_tensor)
     interpreter.invoke()
