@@ -2,7 +2,7 @@
 # Min_conf_threshold on line 28 can be tuned between 0.5 to 0.95 in steps of 0.05. The lower the threshold, the higher the detections, but at a risk of increased false positives
 # This script is for running inference on a single image 
 
-USE_FLOAT = 1
+USE_FLOAT = 0
 print("USE_FLOAT =" +str(USE_FLOAT))
 if(USE_FLOAT == 1):
     Model_path = "Defect_detect.tflite" #float
