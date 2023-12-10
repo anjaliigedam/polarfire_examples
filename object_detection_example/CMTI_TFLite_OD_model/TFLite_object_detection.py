@@ -16,7 +16,7 @@ output_path = "output_images"
 # ontime create the server on Linux laptop
 # >> python3 create_server_linux_laptop.py
 # ADDR = 127.0.0.1 PORT = 8808
-server_url = 'http://127.0.0.1:8080'
+server_url = 'http://192.0.0.1:8080'
 
 import requests
 from tflite_runtime.interpreter import Interpreter
@@ -104,7 +104,7 @@ for test_img in range(length):
         txt = " {}: {}".format(d['class_id'], d['score'])
         font = ImageFont.truetype("LiberationMono-Regular.ttf", 14)
         #font = ImageFont.load_default()
-        ts = draw.textsize(txt, font=font)
+        ts = draw.textlength(txt, font=font)
         draw.rectangle([xmin, ymin, xmax, ymax], outline="red", width=4)
         draw.text((xmin-8, ymin-8), txt, font=font, fill="white", stroke_width=2, stroke_fill="black")
 
