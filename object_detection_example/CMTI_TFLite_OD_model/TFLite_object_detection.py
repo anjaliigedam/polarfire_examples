@@ -10,17 +10,28 @@ else:
     Model_path = "CMTI_gear_detect.tflite" #uint8
 
 Label_path = "label_map.txt"
+image_path = "test_images"
+output_path = "output_images"
 
+# ontime create the server on Linux laptop
+# >> python3 create_server_linux_laptop.py
+# ADDR = 127.0.0.1 PORT = 8808
+server_url = 'http://127.0.0.1:8080'
+
+import requests
 from tflite_runtime.interpreter import Interpreter
 from PIL import Image
 import numpy as np
 import time
 import pprint
+from PIL import ImageFont, ImageDraw
+
+
 
 interpreter = Interpreter(Model_path)
 
 import glob
-arr_img = glob.glob("test_images/*.bmp")
+arr_img = glob.glob(image_path + "/*.bmp")
 length = len(arr_img)
 print("array_images =" +str(arr_img))
 
@@ -72,8 +83,46 @@ for test_img in range(length):
 
     end_time = time.time()
     detection_time = np.round(end_time - start_time, 3)
-
     pprint.pprint(results)
     print("Detection time:", detection_time, "seconds")
     print('\n')
 
+    #=============================================================
+    # generate image
+    #=============================================================
+    
+    # Open image and get image dimensions
+    img = Image.open(arr_img[test_img])
+    imW, imH = img.size
+    draw = ImageDraw.Draw(img)
+
+    for d in results:
+        xmin = int(max(1,(d['bounding_box'][1] * imW)))
+        ymin = int(max(1,(d['bounding_box'][0] * imH)))
+        xmax = int(min(imW,(d['bounding_box'][3] * imW)))
+        ymax = int(min(imH,(d['bounding_box'][2] * imH)))
+        txt = " {}: {}".format(d['class_id'], d['score'])
+        font = ImageFont.truetype("LiberationMono-Regular.ttf", 14)
+        #font = ImageFont.load_default()
+        ts = draw.textsize(txt, font=font)
+        draw.rectangle([xmin, ymin, xmax, ymax], outline="red", width=4)
+        draw.text((xmin-8, ymin-8), txt, font=font, fill="white", stroke_width=2, stroke_fill="black")
+
+    img_name = arr_img[test_img]
+    img_name = img_name.replace(image_path,"").strip("/")
+    out_img = output_path + "/" + img_name
+    print("Dumping out_img = " + out_img)
+    img.save(out_img)
+
+
+    
+    #=============================================================
+    # push image on server
+    #=============================================================
+    print("Pushing out_img onto Server")
+    getdata = requests.post(server_url, data=img_name)
+
+    #files = {'file': open(image_name, 'rb')}
+    files = {'fieldname': (out_img, open(out_img,'rb').read())}
+    getdata = requests.post(server_url, files=files)
+    
