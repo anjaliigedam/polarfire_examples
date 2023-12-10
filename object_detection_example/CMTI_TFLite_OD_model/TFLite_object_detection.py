@@ -2,7 +2,7 @@
 # Min_conf_threshold on line 28 can be tuned between 0.5 to 0.95 in steps of 0.05. The lower the threshold, the higher the detections, but at a risk of increased false positives
 # This script is for running inference on a single image 
 
-USE_FLOAT = 1
+USE_FLOAT = 0
 print("USE_FLOAT =" +str(USE_FLOAT))
 if(USE_FLOAT == 1):
     Model_path = "Defect_detect.tflite" #float
@@ -104,7 +104,7 @@ for test_img in range(length):
         txt = " {}: {}".format(d['class_id'], d['score'])
         font = ImageFont.truetype("LiberationMono-Regular.ttf", 14)
         #font = ImageFont.load_default()
-        ts = draw.textsize(txt, font=font)
+        ts = draw.textlength(txt, font=font)
         draw.rectangle([xmin, ymin, xmax, ymax], outline="red", width=4)
         draw.text((xmin-8, ymin-8), txt, font=font, fill="white", stroke_width=2, stroke_fill="black")
 
