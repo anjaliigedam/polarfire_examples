@@ -15,8 +15,8 @@ output_path = "output_images"
 
 # ontime create the server on Linux laptop
 # >> python3 create_server_linux_laptop.py
-# ADDR = 127.0.0.1 PORT = 8808
-server_url = 'http://0.0.0.0:8080'
+# Linux machine IP addr : Needs to be given here. >> ifconfig 
+server_url = 'http://192.168.0.107:8080'
 
 import requests
 from tflite_runtime.interpreter import Interpreter
@@ -44,13 +44,16 @@ for test_img in range(length):
     _, height, width, _ = input_details[0]['shape']
     print("Image Shape (", width, ",", height, ")")
 
+    print("allocate_tensors")
     interpreter.allocate_tensors()
 
+    print("open labels")
     with open(Label_path,'r') as text:
         labels = [line.strip() for line in text.readlines()]
 
     min_conf_threshold = 0.55
 
+    print("open image")
     img = Image.open(arr_img[test_img])
     resized_img = img.resize((width, height))
     
@@ -62,10 +65,12 @@ for test_img in range(length):
     else:
         img_tensor = np.expand_dims(resized_img, axis=0)
 
+    print("invoke model")
     start_time = time.time()
     interpreter.set_tensor(input_details[0]['index'],img_tensor)
     interpreter.invoke()
     
+    print("get score")
     scores = interpreter.get_tensor(output_details[0]['index']) # Probabilities/ scores of detected objects
     boxes = interpreter.get_tensor(output_details[1]['index']) # Bounding box coordinates (normalized [0,1]) of detected objects
     count = interpreter.get_tensor(output_details[2]['index']) # Number of detected objects
