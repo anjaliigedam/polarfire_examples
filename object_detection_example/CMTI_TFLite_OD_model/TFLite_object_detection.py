@@ -16,7 +16,7 @@ output_path = "output_images"
 # ontime create the server on Linux laptop
 # >> python3 create_server_linux_laptop.py
 # ADDR = 127.0.0.1 PORT = 8808
-server_url = 'http://192.0.0.1:8080'
+server_url = 'http://0.0.0.0:8080'
 
 import requests
 from tflite_runtime.interpreter import Interpreter

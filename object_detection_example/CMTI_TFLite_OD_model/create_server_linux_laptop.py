@@ -12,7 +12,7 @@ import logging
 import time 
 from datetime import datetime
 
-SERVER_ADDR = "192.0.0.1"
+SERVER_ADDR = "0.0.0.0"
 PORT_NUM = 8080
 my_path = "/home/rt/Downloads/server"
 IMAGE_EXTENSION = ".bmp"
